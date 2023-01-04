@@ -1,0 +1,42 @@
+# Project: TcpKeylogger
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = dllmain.o pe_config.o str.o Keylogger.o CRC.o
+LINKOBJ  = dllmain.o pe_config.o str.o Keylogger.o CRC.o
+LIBS     = -L"C:/MinGW32_MSVCRT_winlibs/mingw32/lib" -L"C:/MinGW32_MSVCRT_winlibs/mingw32/i686-w64-mingw32/lib" -static-libgcc -ldbghelp -lws2_32 -lole32 -lgdiplus -lGdi32
+INCS     = -I"C:/MinGW32_MSVCRT_winlibs/mingw32/include" -I"C:/MinGW32_MSVCRT_winlibs/mingw32/i686-w64-mingw32/include" -I"C:/MinGW32_MSVCRT_winlibs/mingw32/lib/gcc/i686-w64-mingw32/11.2.0/include"
+CXXINCS  = -I"C:/MinGW32_MSVCRT_winlibs/mingw32/include" -I"C:/MinGW32_MSVCRT_winlibs/mingw32/i686-w64-mingw32/include" -I"C:/MinGW32_MSVCRT_winlibs/mingw32/lib/gcc/i686-w64-mingw32/11.2.0/include"
+BIN      = TcpKeylogger.dll
+CXXFLAGS = $(CXXINCS) -DBUILDING_DLL=1
+CFLAGS   = $(INCS) -DBUILDING_DLL=1
+RM       = rm.exe -f
+DEF      = libTcpKeylogger.def
+STATIC   = libTcpKeylogger.a
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN) $(DEF) $(STATIC)
+
+$(BIN): $(LINKOBJ)
+	$(CC) -shared $(LINKOBJ) -o $(BIN) $(LIBS) -Wl,--output-def,$(DEF),--out-implib,$(STATIC),--add-stdcall-alias
+
+dllmain.o: dllmain.c
+	$(CC) -c dllmain.c -o dllmain.o $(CFLAGS)
+
+pe_config.o: pe_config.c
+	$(CC) -c pe_config.c -o pe_config.o $(CFLAGS)
+
+str.o: str.c
+	$(CC) -c str.c -o str.o $(CFLAGS)
+
+Keylogger.o: Keylogger.c
+	$(CC) -c Keylogger.c -o Keylogger.o $(CFLAGS)
+
+CRC.o: CRC.c
+	$(CC) -c CRC.c -o CRC.o $(CFLAGS)

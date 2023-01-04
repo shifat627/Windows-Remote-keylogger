@@ -1,0 +1,4 @@
+EXPORTS
+    PeConfig = PeConfig@4 @1
+    PeConfig@4 @2
+    StringCompare @3
